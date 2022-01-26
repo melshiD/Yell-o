@@ -1,0 +1,12 @@
+<%- include('../partials/head', {pageTabTitle: `${campground.title} Details`})  %> 
+</head>
+<body>
+    <h1><%= campground.title  %>  Details Page</h1>
+    <h2><%= campground.location  %></h2>
+    <footer>
+    <a href="/campgrounds">Back To Main</a>
+    <br>
+    <a href="/campgrounds/<%= campground.id %>/edit">Edit Site Entry</a>
+</footer>
+</body>
+</html>

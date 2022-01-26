@@ -1,0 +1,13 @@
+<%- include('../partials/head', {pageTabTitle: 'Campground Site'})  %> 
+</head>
+<body>
+    <h1>Made it to the Campgrounds Site</h1>
+    <a href="/campgrounds/new">Add a Campsite</a>
+
+    <ul>
+        <% for(let campground of campgrounds){ %> 
+            <li><a href="campgrounds/<%= campground.id %>"><%= campground.title %></a> </li>
+        <% } %> 
+    </ul>
+</body>
+</html>

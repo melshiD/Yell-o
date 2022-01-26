@@ -1,0 +1,15 @@
+<%- include('../partials/head', {pageTabTitle: 'new.ejs'}) %> 
+</body>
+<body>
+    <h1>Add A Campground</h1>
+    <form action="/campgrounds" method="post">
+        <label for="title">Add Description</label>
+        <input type="text" name="campground[title]" id="campground[title]" placeholder="Title Here">
+        <label for="location">Add Location</label>
+        <input type="text" name="campground[location]" id="campground[location]" placeholder="Add Location Here">
+        <button>Submit</button>
+        <hr>
+        <a href="/campgrounds">Return To Main Site</a>
+    </form>
+</body>
+</html>

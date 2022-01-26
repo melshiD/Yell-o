@@ -1,0 +1,14 @@
+<%- include('../partials/head', {pageTabTitle: 'Edit Page'})  %> 
+</head><body>
+    <h1>Edit Campsite Entry Here</h1>
+    <form action="/campgrounds/<%=siteToEdit._id%>?_method=PUT" method="post">
+        <label for="title" name="campground[title]">Change Title</label>
+        <input type="text" id="title" value="<%= siteToEdit.title  %>">
+        <label for="location" name="campground[location]">Change Location</label>
+        <input type="text" id="location" value="<%= siteToEdit.location  %>">
+        <button>Submit Change</button>
+    </form>
+    <hr>
+    <a href="/campgrounds">Return To Main Site</a>
+</body>
+</html>

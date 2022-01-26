@@ -20,7 +20,7 @@ const seedDB = async () => {
     for(let i = 0; i < 50; i ++){
         const camp = new Campground({
             location: `${cities[rand(1000)].city}, ${cities[rand(1000)].state}`,
-            description: `${sample(descriptors)} ${sample(places)}`
+            title: `${sample(descriptors)} ${sample(places)}`
         });
         await camp.save();
     }

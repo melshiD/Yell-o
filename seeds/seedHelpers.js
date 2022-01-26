@@ -16,7 +16,15 @@ module.exports.descriptors = [
     'Sea',
     'Sky',
     'Dusty',
-    'Diamond'
+    'Diamond',
+    'Happy',
+    'Best Dragon',
+    'Very Best',
+    'One Hour',
+    'Grestest',
+    'Awesome',
+    'Boring',
+    'Homocidal'
 ];
 
 module.exports.places = [
