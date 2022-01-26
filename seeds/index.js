@@ -26,3 +26,4 @@ const seedDB = async () => {
     }
 }
 seedDB().then(() => db.close());
+
