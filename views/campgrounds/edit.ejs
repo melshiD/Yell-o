@@ -1,14 +1,41 @@
-<%- include('../partials/head', {pageTabTitle: 'Edit Page'})  %> 
-</head><body>
-    <h1>Edit Campsite Entry Here</h1>
-    <form action="/campgrounds/<%=siteToEdit._id%>?_method=PUT" method="post">
-        <label for="title" name="campground[title]">Change Title</label>
-        <input type="text" id="title" value="<%= siteToEdit.title  %>">
-        <label for="location" name="campground[location]">Change Location</label>
-        <input type="text" id="location" value="<%= siteToEdit.location  %>">
-        <button>Submit Change</button>
-    </form>
-    <hr>
-    <a href="/campgrounds">Return To Main Site</a>
-</body>
-</html>
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <h1 class="text-center">Edit Campground</h1>
+        <div class="col-6 offset-3">
+            <form action="/campgrounds/<%=siteToEdit._id%>?_method=PUT" method="post">
+                <div class="mb-1">
+                    <label class="form-label" for="title">Change Title</label>
+                    <input class="form-control" type="text" name="campground[title]" id="title"
+                        value="<%= siteToEdit.title  %> ">
+                </div>
+                <div class="mb-1">
+                    <label class="form-label" for="location">Edit Location</label>
+                    <input class="form-control" type="text" name="campground[location]" id="location"
+                        value="<%= siteToEdit.location  %> ">
+                </div>
+                <div class="mb-1">
+                    <label class="form-label" for="image">Image URL</label>
+                    <input class="form-control" type="text" name="campground[image]" id="image"
+                        value="<%= siteToEdit.image  %> ">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="price">Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" class="form-control" id="price" name="campground[price]"
+                            value="<%= siteToEdit.price  %>" aria-label="Amount (to the nearest dollar)">
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" name="campground[description]" id="description"><%=siteToEdit.description%>
+                    </textarea>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-info mt-1">Update Entry</button>
+                </div>
+                <hr>
+                <a href="/campgrounds">Return To Main Site</a>
+            </form>
+        </div>
+    </div>

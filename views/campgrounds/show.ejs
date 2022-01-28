@@ -1,12 +1,16 @@
-<%- include('../partials/head', {pageTabTitle: `${campground.title} Details`})  %> 
-</head>
-<body>
-    <h1><%= campground.title  %>  Details Page</h1>
-    <h2><%= campground.location  %></h2>
-    <footer>
+<% layout('layouts/boilerplate') %>
+
+    <h1>
+        <%= campground.title %>
+    </h1>
+    <h2>
+        <%= campground.location %>
+    </h2>
+    <img src="<%=campground.image%>" alt="image">
+    <p><%= campground.description  %> </p>
     <a href="/campgrounds">Back To Main</a>
     <br>
-    <a href="/campgrounds/<%= campground.id %>/edit">Edit Site Entry</a>
-</footer>
-</body>
-</html>
+    <a href="/campgrounds/<%= campground._id %>/edit">Edit Site Entry</a>
+    <form action="/campgrounds/<%=campground.id%>?_method=DELETE" method="POST">
+        <button>DELETE</button>
+    </form>
