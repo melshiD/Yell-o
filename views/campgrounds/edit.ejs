@@ -2,33 +2,33 @@
     <div class="row">
         <h1 class="text-center">Edit Campground</h1>
         <div class="col-6 offset-3">
-            <form action="/campgrounds/<%=siteToEdit._id%>?_method=PUT" method="post">
+            <form class="needs-validation" action="/campgrounds/<%=siteToEdit._id%>?_method=PUT" method="post" novalidate>
                 <div class="mb-1">
                     <label class="form-label" for="title">Change Title</label>
                     <input class="form-control" type="text" name="campground[title]" id="title"
-                        value="<%= siteToEdit.title  %> ">
+                        value="<%= siteToEdit.title  %> "  required>
                 </div>
                 <div class="mb-1">
                     <label class="form-label" for="location">Edit Location</label>
                     <input class="form-control" type="text" name="campground[location]" id="location"
-                        value="<%= siteToEdit.location  %> ">
+                        value="<%= siteToEdit.location  %> " required>
                 </div>
                 <div class="mb-1">
                     <label class="form-label" for="image">Image URL</label>
                     <input class="form-control" type="text" name="campground[image]" id="image"
-                        value="<%= siteToEdit.image  %> ">
+                        value="<%= siteToEdit.image  %> " required>
                 </div>
                 <div class="mb-2">
                     <label class="form-label" for="price">Price</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" id="price" name="campground[price]"
-                            value="<%= siteToEdit.price  %>" aria-label="Amount (to the nearest dollar)">
+                        <input required type="number" class="form-control" id="price" name="campground[price]"
+                            value="<%=siteToEdit.price%>" aria-label="Amount (to the nearest dollar)">
                     </div>
                 </div>
                 <div class="mb-1">
                     <label class="form-label" for="description">Description</label>
-                    <textarea class="form-control" type="text" name="campground[description]" id="description"><%=siteToEdit.description%>
+                    <textarea required class="form-control" type="text" name="campground[description]" id="description"><%=siteToEdit.description%>
                     </textarea>
                 </div>
                 <div class="mb-3">

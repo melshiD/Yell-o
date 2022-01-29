@@ -2,30 +2,30 @@
     <div class="row">
         <h1 class="text-center">New Campground</h1>
         <div class="col-6 offset-3">
-            <form action="/campgrounds" method="post">
+            <form class="needs-validation" action="/campgrounds" method="post" novalidate>
                 <div class="mb-1">
                     <label class="form-label" for="title">Add Description</label>
-                    <input class="form-control" type="text" name="campground[title]" id="title"
-                        placeholder="Title Here">
+                    <input class="form-control" type="text" name="campground[title]" id="title" placeholder="Title Here"
+                        required>
                 </div>
                 <div class="mb-1">
                     <label class="form-label" for="location">Add Location</label>
                     <input class="form-control" type="text" name="campground[location]" id="location"
-                        placeholder="Add Location Here">
+                        placeholder="Add Location Here" required>
                 </div>
                 <div class="mb-1">
                     <label class="form-label" for="image">Image URL</label>
                     <input class="form-control" type="text" name="campground[image]" id="image"
-                        placeholder="Add image URL Here">
+                        placeholder="Add image URL Here" required>
                 </div>
                 <div class="mb-1">
                     <label class="form-label" for="description">Image URL</label>
                     <textarea class="form-control" type="text" name="campground[description]" id="description"
-                        placeholder="Write a brief description"></textarea>
+                        placeholder="Write a brief description" required></textarea>
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">$</span>
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                    <input required class="form-control" type="text" name="campground[price]" aria-label="Price">
 
                 </div>
                 <div class="mb-3">
