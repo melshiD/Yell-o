@@ -37,7 +37,11 @@ app.get('/campgrounds', wrappedAsync(async (req, res, next) => {
 app.get('/home', (req, res) => {
     res.render('home');
 });
-           
+
+app.get('/pending', (req, res) => {
+    res.render('pending');
+});
+
 app.get('/campgrounds/new', (req, res) => {
     res.render('campgrounds/new');
 });
