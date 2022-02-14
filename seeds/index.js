@@ -22,7 +22,7 @@ const seedDB = async () => {
         const camp = new Campground({
             location: `${cities[rand(1000)].city}, ${cities[rand(1000)].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
-            image: `C:/Users/davem/Coding/YELL-O/seeds/images/${i}.png`,
+            image: `images/camp_img_${i}.png`,
             description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis incidunt suscipit officiis consequatur blanditiis! Ut eveniet ducimus libero distinctio veniam provident ullam praesentium ratione non delectus dolores consectetur, ipsam quaerat! Eum ullam quibusdam suscipit.',
             price: price
         });

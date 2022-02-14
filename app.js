@@ -11,6 +11,7 @@ const wrappedAsync = require('./utils/wrappedAsync');
 const res = require('express/lib/response');
 const campground = require('./models/campground');
 const {campgroundSchema} = require('./schemas');
+const Review = require('./models/review')
 
 
 
@@ -28,6 +29,7 @@ app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
@@ -89,6 +91,15 @@ app.delete('/campgrounds/:id', wrappedAsync(async (req, res) => {
     await Campground.findByIdAndDelete(id);
     //was not working because I was passing an object to it!
     res.redirect('/campgrounds');
+}));
+
+app.post('/campgrounds/:id/reviews', wrappedAsync(async (req, res) => {
+    let campground = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    campground.reviews.push(review);
+    await review.save();
+    await campground.save();
+    res.redirect(`/campgrounds/${campground._id}`);
 }));
 
 app.all('*', (req, res, next) => {
