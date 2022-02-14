@@ -9,6 +9,8 @@ const { update } = require('./models/campground');
 const ExpressError = require('./utils/ExpressError');
 const wrappedAsync = require('./utils/wrappedAsync');
 const res = require('express/lib/response');
+const campground = require('./models/campground');
+const {campgroundSchema} = require('./schemas');
 
 
 
@@ -28,6 +30,16 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
+
+const validateCampground = (req, res, next) => {
+    const {error} = campgroundSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else{
+        next();
+    }
+}
 
 app.get('/campgrounds', wrappedAsync(async (req, res, next) => {
     const campgrounds = await Campground.find({});
@@ -52,11 +64,12 @@ app.get('/campgrounds/:id', wrappedAsync(async (req, res) => {
     res.render('campgrounds/show', {campground});
 }));
 
-app.post('/campgrounds', wrappedAsync(async (req, res, next) => {
+app.post('/campgrounds', validateCampground, wrappedAsync(async (req, res, next) => {
+    // if(!req.body.campground) throw new ExpressError('More information required', 400);
     req.body.campground.image = `https://picsum.photos/501/374`;
     const newCamp = new Campground(req.body.campground);
     await newCamp.save();
-    console.log(newCamp);
+
     res.redirect(`/campgrounds/${newCamp._id}`);
 }));
 
@@ -65,7 +78,7 @@ app.get('/campgrounds/:id/edit', wrappedAsync(async (req, res) => {
     res.render(`campgrounds/edit`, {siteToEdit});
 }));
 
-app.put('/campgrounds/:id', wrappedAsync(async (req, res) => {
+app.put('/campgrounds/:id', validateCampground, wrappedAsync(async (req, res) => {
     const {id} = req.params;
     const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground});
     res.redirect(`/campgrounds/${campground._id}`);
@@ -83,8 +96,10 @@ app.all('*', (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-    const {statusCode = 500, message = 'something went wrong'} = err;
-    res.status(statusCode).send(message);
+    if(!err.statusCode) err.statusCode = 500;
+    if(!err.message) err.message = 'Oh No, something went wrong';
+    // res.status(statusCode).send(message);
+    res.status(err.statusCode).render('error', {err});
 });
 
 app.listen(3000, () => {
