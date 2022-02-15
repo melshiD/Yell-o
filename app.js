@@ -10,7 +10,7 @@ const ExpressError = require('./utils/ExpressError');
 const wrappedAsync = require('./utils/wrappedAsync');
 const res = require('express/lib/response');
 const campground = require('./models/campground');
-const {campgroundSchema} = require('./schemas');
+const {campgroundSchema, reviewSchema} = require('./schemas');
 const Review = require('./models/review')
 
 
@@ -43,6 +43,16 @@ const validateCampground = (req, res, next) => {
     }
 }
 
+const validateReview = (req, res, next) => {
+    const {error} = reviewSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else{
+        next();
+    }
+}
+
 app.get('/campgrounds', wrappedAsync(async (req, res, next) => {
     const campgrounds = await Campground.find({});
     res.render('campgrounds/index', {campgrounds});
@@ -62,13 +72,15 @@ app.get('/campgrounds/new', (req, res) => {
 
 app.get('/campgrounds/:id', wrappedAsync(async (req, res) => {
     const {id} = req.params;
-    const campground = await Campground.findById(id);
+    const campground = await Campground.findById(id).populate('reviews');
     res.render('campgrounds/show', {campground});
 }));
 
 app.post('/campgrounds', validateCampground, wrappedAsync(async (req, res, next) => {
     // if(!req.body.campground) throw new ExpressError('More information required', 400);
     req.body.campground.image = `https://picsum.photos/501/374`;
+
+
     const newCamp = new Campground(req.body.campground);
     await newCamp.save();
 
@@ -93,13 +105,20 @@ app.delete('/campgrounds/:id', wrappedAsync(async (req, res) => {
     res.redirect('/campgrounds');
 }));
 
-app.post('/campgrounds/:id/reviews', wrappedAsync(async (req, res) => {
+app.post('/campgrounds/:id/reviews', validateReview,  wrappedAsync(async (req, res) => {
     let campground = await Campground.findById(req.params.id);
     const review = new Review(req.body.review);
     campground.reviews.push(review);
     await review.save();
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`);
+}));
+
+app.delete('/campgrounds/:id/reviews/:reviewId', wrappedAsync( async (req, res) => {
+    const {id, reviewId} = req.params;
+    let campground = await Campground.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/campgrounds/${id}`);
 }));
 
 app.all('*', (req, res, next) => {
